@@ -56,7 +56,7 @@ connection.connect(function(err) {
     }
   
     console.log('Connected to the MySQL server.');
-    connection.query("SELECT * FROM infos", function (err, result, fields) {
+    connection.query("SELECT name, description FROM infos", function (err, result, fields) {
         if (err) throw err;
         console.log(result);
       });
@@ -77,7 +77,8 @@ app.get('/', (req, res) => {
 
   // Use req.log (a `pino` instance) to log JSON:	
   req.log.info({message: 'MySQL result: '});		
-  res.send('MySQL query result:');	
+  //res.send('MySQL query result:');
+  res.send(result[0].description);
 });	
 
 
