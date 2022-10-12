@@ -3,6 +3,8 @@ const express = require('express');
 const http = require('http');
 const mysql = require('mysql2');
 
+var dbdata = null;
+
 Prometheus.collectDefaultMetrics();
 
 const requestHistogram = new Prometheus.Histogram({
@@ -59,6 +61,8 @@ connection.connect(function(err) {
     connection.query("SELECT name, description FROM infos", function (err, result, fields) {
         if (err) throw err;
         console.log(result);
+        dbdata = result;
+        connection.end();
       });
   });
 // DB CONNECTION AND QUERY END
@@ -78,7 +82,7 @@ app.get('/', (req, res) => {
   // Use req.log (a `pino` instance) to log JSON:	
   req.log.info({message: 'MySQL result: '});		
   //res.send('MySQL query result:');
-  res.send(result);
+  res.send(dbdata);
 });	
 
 
