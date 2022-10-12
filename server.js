@@ -78,7 +78,7 @@ app.get('/', (req, res) => {
   // Use req.log (a `pino` instance) to log JSON:	
   req.log.info({message: 'MySQL result: '});		
   //res.send('MySQL query result:');
-  res.send(result[0].description);
+  res.send('MySQL result: ' + result[0].description);
 });	
 
 
