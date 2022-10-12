@@ -43,7 +43,7 @@ app.get('/metrics', (req, res, next) => {
   res.end(Prometheus.register.metrics())
 })
 
-// DB CONNECTION AND QUERY START
+// DB CONNECTION 
 let connection = mysql.createConnection({
     host: 'mysql.sergione-dev.svc.cluster.local',
     user: 'tester',
@@ -51,21 +51,24 @@ let connection = mysql.createConnection({
     database: 'testdb'
 });
 
+// DB QUERY
+function getRows(res){
 
-connection.connect(function(err) {
-    if (err) {
-      return console.error('error: ' + err.message);
-    }
-  
-    console.log('Connected to the MySQL server.');
-    connection.query("SELECT name, description FROM infos", function (err, result, fields) {
-        if (err) throw err;
-        console.log(result);
-        dbdata = result;
-        connection.end();
+    connection.connect(function(err) {
+        if (err) {
+          return console.error('error: ' + err.message);
+        }
+
+        console.log('Connected to the MySQL server.');
+        connection.query("SELECT name, description FROM infos", function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            dbdata = result;
+            connection.end();
+            res.send(dbdata);
+          });
       });
-  });
-// DB CONNECTION AND QUERY END
+// DB QUERY END
 
 // Time routes after here.
 app.use(requestTimer);
@@ -80,9 +83,10 @@ app.get('/', (req, res) => {
     
 
   // Use req.log (a `pino` instance) to log JSON:	
-  req.log.info({message: 'MySQL result: '});		
+  req.log.info({message: 'MySQL query'});		
   //res.send('MySQL query result:');
-  res.send(dbdata);
+  // res.send(dbdata);
+  getRows(res); 
 });	
 
 
