@@ -68,6 +68,7 @@ function getRows(res){
             res.send(dbdata);
           });
       });
+} 
 // DB QUERY END
 
 // Time routes after here.
@@ -85,7 +86,7 @@ app.get('/', (req, res) => {
   // Use req.log (a `pino` instance) to log JSON:	
   req.log.info({message: 'MySQL query'});		
   //res.send('MySQL query result:');
-  // res.send(dbdata);
+  //res.send(dbdata);
   getRows(res); 
 });	
 
