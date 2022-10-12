@@ -41,26 +41,6 @@ app.get('/metrics', (req, res, next) => {
   res.end(Prometheus.register.metrics())
 })
 
-let connection = mysql.createConnection({
-    host: 'mysql.sergione-dev.svc.cluster.local',
-    user: 'tester',
-    password: 'Pass1234',
-    database: 'testdb'
-});
-
-// DB CONNECTION AND QUERY START
-connection.connect(function(err) {
-    if (err) {
-      return console.error('error: ' + err.message);
-    }
-  
-    console.log('Connected to the MySQL server.');
-    connection.query("SELECT * FROM infos", function (err, result, fields) {
-        if (err) throw err;
-        console.log(result);
-      });
-  });
-// DB CONNECTION AND QUERY END
 
 // Time routes after here.
 app.use(requestTimer);
