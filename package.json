@@ -4,7 +4,7 @@
   "description": "Simple Node.js application",
   "license": "EPL-2.0",
   "scripts": {
-    "start": "node simple.js",
+    "start": "node server.js",
     "debug": "node --inspect=${DEBUG_PORT} server.js",
     "test": "node test/test.js"
   },
