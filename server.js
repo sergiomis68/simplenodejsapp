@@ -64,7 +64,7 @@ function getRows(res){
             if (err) throw err;
             console.log(result);
             dbdata = result;
-            connection.end();
+            //connection.end();
             res.send(dbdata);
           });
       });
